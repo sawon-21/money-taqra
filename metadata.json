@@ -1,0 +1,6 @@
+{
+  "name": "MoneyTaqra",
+  "description": "Control spending. Build savings. A premium expense tracker for Bangladeshi students with AI-powered insights, tuition management, and offline-first PWA support.",
+  "requestFramePermissions": ["microphone"],
+  "majorCapabilities": ["AI Assistant", "Offline Sync", "PWA", "Tuition Tracking"]
+}

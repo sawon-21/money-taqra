@@ -1,0 +1,48 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Helper functions
+    function isSignedIn() {
+      return request.auth != null;
+    }
+    
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+    
+    function isValidTransaction(data) {
+      return data.keys().hasAll(['type', 'amount', 'category', 'subcategory', 'account', 'date', 'userId']) &&
+             data.type in ['income', 'expense', 'transfer'] &&
+             data.amount is number &&
+             data.category is string &&
+             data.category.size() <= 100 &&
+             data.subcategory is string &&
+             data.subcategory.size() <= 100 &&
+             data.account is string &&
+             data.account.size() <= 50 &&
+             data.date is string &&
+             data.userId == request.auth.uid;
+    }
+
+    // Default deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Transactions collection
+    match /users/{userId}/transactions/{transactionId} {
+      allow list: if isOwner(userId);
+      allow get: if isOwner(userId);
+      allow create: if isOwner(userId) && isValidTransaction(request.resource.data);
+      allow update: if isOwner(userId) && 
+                      isValidTransaction(request.resource.data) &&
+                      request.resource.data.userId == resource.data.userId;
+      allow delete: if isOwner(userId);
+    }
+    
+    // AI Messages collection
+    match /users/{userId}/ai_messages/{messageId} {
+      allow read, write: if isOwner(userId);
+    }
+  }
+}

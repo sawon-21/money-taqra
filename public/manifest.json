@@ -1,0 +1,16 @@
+{
+  "name": "MoneyTaqra",
+  "short_name": "MoneyTaqra",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0ea5e9",
+  "icons": [
+    {
+      "src": "https://cdn.pixabay.com/photo/2017/01/25/17/35/wallet-2008434_1280.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
