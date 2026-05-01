@@ -6,7 +6,7 @@
 import { GoogleGenAI } from '@google/genai';
 import { INCOME_CATEGORIES, EXPENSE_CATEGORIES } from '../constants';
 
-const API_KEY = AIzaSyDogaG2rnTGAFEz1qgV0qpqOjl0bkpZJj8;
+const API_KEY = process.env.GEMINI_API_KEY;
 const ai = new GoogleGenAI({ apiKey: API_KEY || '' });
 
 const SYSTEM_PROMPT = `
